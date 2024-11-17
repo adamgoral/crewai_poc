@@ -1,52 +1,46 @@
 #!/usr/bin/env python
 from random import randint
 import os
+from typing import Optional
 from pydantic import BaseModel
 
 from crewai.flow.flow import Flow, listen, start
 
-from .crews.poem_crew.poem_crew import PoemCrew
+from .crews.research_crew.research_crew import ResearchCrew
 
 
-class PoemState(BaseModel):
-    sentence_count: int = 1
-    poem: str = ""
+class ResearchState(BaseModel):
+    opportunities: Optional[str] = None
+    models: Optional[str] = None
 
 
-class PoemFlow(Flow[PoemState]):
+class ResearchFlow(Flow[ResearchState]):
 
     @start()
-    def generate_sentence_count(self):
-        print("Generating sentence count")
-        self.state.sentence_count = randint(1, 5)
-
-    @listen(generate_sentence_count)
-    def generate_poem(self):
-        print("Generating poem")
+    def generate_trading_models(self):
+        print("Generating trading models")
         result = (
-            PoemCrew()
+            ResearchCrew()
             .crew()
-            .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            .kickoff(inputs={"topic": "FX"})
         )
+        self.state.opportunities = result.raw
 
-        print("Poem generated", result.raw)
-        self.state.poem = result.raw
-
-    @listen(generate_poem)
-    def save_poem(self):
-        print("Saving poem")
-        with open("poem.txt", "w") as f:
-            f.write(self.state.poem)
+    @listen(generate_trading_models)
+    def save_trading_models(self):
+        print("Saving models")
+        print("Models generated:", self.state.opportunities)
+        self.state.models = self.state.opportunities
 
 
 def kickoff():
-    poem_flow = PoemFlow()
-    poem_flow.kickoff()
+    flow = ResearchFlow()
+    flow.kickoff()
 
 
 def plot():
-    poem_flow = PoemFlow()
-    poem_flow.plot()
+    flow = ResearchFlow()
+    flow.plot()
 
 
 if __name__ == "__main__":
