@@ -1,17 +1,14 @@
 #!/usr/bin/env python
-from random import randint
-import os
-from typing import Optional
-from pydantic import BaseModel
 
 from crewai.flow.flow import Flow, listen, start
+from pydantic import BaseModel
 
-from .crews.research_crew.research_crew import ResearchCrew
+from .crews.sports_crew.sports_crew import SportsCrew
 
 
 class ResearchState(BaseModel):
-    opportunities: Optional[str] = None
-    models: Optional[str] = None
+    opportunities: str | None = None
+    models: str | None = None
 
 
 class ResearchFlow(Flow[ResearchState]):
@@ -20,9 +17,9 @@ class ResearchFlow(Flow[ResearchState]):
     def generate_trading_models(self):
         print("Generating trading models")
         result = (
-            ResearchCrew()
+            SportsCrew()
             .crew()
-            .kickoff(inputs={"topic": "FX"})
+            .kickoff(inputs={})
         )
         self.state.opportunities = result.raw
 

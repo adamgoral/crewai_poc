@@ -15,3 +15,54 @@ plot = "research_flow.main:plot"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.ruff]
+# Enable pycodestyle ('E'), pyflakes ('F'), and isort ('I') rules
+line-length = 88  # Same as black
+target-version = "py310"
+
+[tool.ruff.lint]
+# Enable Ruff's default rules ('E', 'F') plus:
+# B: flake8-bugbear
+# I: isort
+# N: pep8-naming
+# UP: pyupgrade
+# W: pycodestyle warnings
+# C: complexity checks
+select = ["E", "F", "B", "I", "N", "UP", "W", "C"]
+ignore = []
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Ignore unused imports in __init__.py files
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10  # Default is 10

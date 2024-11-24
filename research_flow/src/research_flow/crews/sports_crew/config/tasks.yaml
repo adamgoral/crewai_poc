@@ -1,0 +1,6 @@
+gather_sports_news:
+  description: >
+    Search sports websites and gather information about upcoming horse races in UK on 24th November 2024
+  expected_output: >
+    A list with horse betting tips and suggested winner for each race
+  agent: sports_news_gatherer

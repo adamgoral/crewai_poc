@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 from langtrace_python_sdk import langtrace
 
