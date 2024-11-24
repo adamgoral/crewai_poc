@@ -10,24 +10,27 @@ class ResearchState(BaseModel):
     opportunities: str | None = None
     models: str | None = None
 
+class TipsState(BaseModel):
+    tips: str | None = None
 
-class ResearchFlow(Flow[ResearchState]):
+class ResearchFlow(Flow[TipsState]):
 
     @start()
-    def generate_trading_models(self):
+    def run_sports_crew(self):
         print("Generating trading models")
         result = (
             SportsCrew()
             .crew()
             .kickoff(inputs={})
         )
-        self.state.opportunities = result.raw
+        self.state.tips = result.raw
 
-    @listen(generate_trading_models)
-    def save_trading_models(self):
-        print("Saving models")
-        print("Models generated:", self.state.opportunities)
-        self.state.models = self.state.opportunities
+    @listen(run_sports_crew)
+    def save_tips(self):
+        print("Saving tips")
+        print("Tips generated:")
+        print(self.state.tips)
+        self.state.tips = self.state.tips
 
 
 def kickoff():

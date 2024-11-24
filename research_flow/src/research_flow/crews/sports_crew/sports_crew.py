@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools.tools import ScrapeWebsiteTool, WebsiteSearchTool, SerperDevTool
+from crewai_tools.tools import ScrapeWebsiteTool, SerperDevTool, WebsiteSearchTool
 
 # Uncomment the following line to use an example of a custom tool
 # from sports_flow.tools.custom_tool import MyCustomTool
@@ -30,10 +30,11 @@ class SportsCrew:
         )
 
     @task
-    def gather_sports_news(self) -> Task:
+    def find_horse_races(self) -> Task:
         return Task(
             config=self.tasks_config["gather_sports_news"],
         )
+
 
     @crew
     def crew(self) -> Crew:
